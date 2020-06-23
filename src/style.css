@@ -1,0 +1,33 @@
+@font-face {
+  font-family: qualy;
+  src: url(Qualy.ttf);
+}
+
+body {
+  overflow: hidden;
+}
+
+h1, p {
+  font-family: Lato;
+}
+
+#download_container {
+  width: 300px;
+  height: 425px;
+  font-size: 32px;
+  position: relative;
+  color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#download_container .centered {
+  width: calc(100% - 21px);
+  height: 100%;
+  padding: 0 10px;
+  font-family: qualy;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  overflow-wrap: break-word;
+}
