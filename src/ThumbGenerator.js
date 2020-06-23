@@ -3,7 +3,6 @@ import images from './image';
 
 const ThumbGenerator = () => {
   const [title,setTitle] = React.useState('');
-  const [imgSrc,setImgSrc] = React.useState('');
 
 
   const toDataURL = url => fetch(url)
@@ -17,6 +16,7 @@ const ThumbGenerator = () => {
 
   const generate = (fileName) => {
     let section = document.getElementById('download_container');
+    const html2canvas = window.html2canvas;
     html2canvas(section).then(canvas => {
       var link = document.createElement('a');
       link.href = canvas.toDataURL();
@@ -31,7 +31,7 @@ const ThumbGenerator = () => {
   }
 
   const handleOptions = async (e) => {
-    let src = await toDataURL(images.filter(i => i.name == e.target.value)[0].src);
+    let src = await toDataURL(images.filter(i => i.name === e.target.value)[0].src);
     let el = document.getElementById('download_container')
     el.style.backgroundImage = `url('${src}')`;
   }
@@ -41,7 +41,6 @@ const ThumbGenerator = () => {
       let src = await toDataURL(images[0].src);
       let el = document.getElementById('download_container')
       el.style.backgroundImage = `url('${src}')`;
-      setImgSrc(src)
     }
     getInitImage()
   },[])
@@ -50,15 +49,15 @@ const ThumbGenerator = () => {
     <>
       <div id="target">
         <div id="download_container">
-          <div class="centered">{title}</div>
+          <div className="centered">{title}</div>
         </div>
       </div>
       <br />
       <select onChange={handleOptions}>
         {
-          images.map(i => {
+          images.map((i,key) => {
             return (
-              <option>{i.name}</option>
+              <option key={key}>{i.name}</option>
             )
           })
         }

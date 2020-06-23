@@ -1,14 +1,10 @@
 @font-face {
-  font-family: qualy;
-  src: url(Qualy.ttf);
+  font-family: Qualy;
+  src: url("./Qualy.ttf") ;
 }
 
 body {
   overflow: hidden;
-}
-
-h1, p {
-  font-family: Lato;
 }
 
 #download_container {
@@ -24,7 +20,8 @@ h1, p {
   width: calc(100% - 21px);
   height: 100%;
   padding: 0 10px;
-  font-family: qualy;
+  font-family: Qualy !important;
+  font-weight: 700;
   display: flex;
   text-align: center;
   align-items: center;

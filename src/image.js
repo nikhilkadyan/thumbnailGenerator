@@ -22,6 +22,22 @@ const images = [
   {
     name: 'Conferences',
     src : 'https://i.imgur.com/Hyrsmjz.jpg'
+  },
+  {
+    name: 'Fellowships',
+    src : 'https://i.imgur.com/gxDYk3z.jpg'
+  },
+  {
+    name: 'Summer/Winter Schools',
+    src : 'https://i.imgur.com/QIpy36W.jpg'
+  },
+  {
+    name: 'Workshops',
+    src : 'https://i.imgur.com/R4pzsDO.jpg'
+  },
+  {
+    name: 'Competitions',
+    src : 'https://i.imgur.com/kPundKv.jpg'
   }
 ]
 
