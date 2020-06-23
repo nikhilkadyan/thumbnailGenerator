@@ -56,8 +56,8 @@ const ThumbGenerator = () => {
         method: 'post',
         url: 'https://api.precisely.co.in/api/v1/save_resource_thumbnail',
         data: formData,
-        headers: {'Content-Type': 'multipart/form-data' }
-        }).then(res => console.log(res)).catch(res => console.log(res.response))
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }).then(res => console.log(res)).catch(res => console.log(res.response))
     });
   }
 
@@ -72,9 +72,10 @@ const ThumbGenerator = () => {
     console.log('Fired')
     let res = await axios.get('https://api.precisely.co.in/api/v1/list_s3_files?user_id=1&type=0')
     let result = []
+    // eslint-disable-next-line
     res.data.data.map(r => {
       if (r.thumbnail_url === null || r.thumbnail_url === '') {
-        result.push(r)
+        return result.push(r)
       }
     })
     result.map(async (r) => {
@@ -87,7 +88,10 @@ const ThumbGenerator = () => {
     })
   }
 
-  React.useEffect(() => { changeBg() }, [])
+  React.useEffect(() => {
+    changeBg()
+    // eslint-disable-next-line
+  },[])
 
   return (
     <>
