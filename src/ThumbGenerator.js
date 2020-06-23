@@ -1,18 +1,18 @@
 import React from 'react';
 import images from './image';
+import axios from 'axios';
 
 const ThumbGenerator = () => {
-  const [title,setTitle] = React.useState('');
-
+  const [title, setTitle] = React.useState('');
 
   const toDataURL = url => fetch(url)
-  .then(response => response.blob())
-  .then(blob => new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result)
-    reader.onerror = reject
-    reader.readAsDataURL(blob)
-  }))
+    .then(response => response.blob())
+    .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+    }))
 
   const generate = (fileName) => {
     let section = document.getElementById('download_container');
@@ -26,24 +26,33 @@ const ThumbGenerator = () => {
     });
   }
 
-  const handleChange = (e) => {
-    setTitle(e.target.value)
-  }
-
-  const handleOptions = async (e) => {
-    let src = await toDataURL(images.filter(i => i.name === e.target.value)[0].src);
+  const changeBg = async () => {
+    let src = await toDataURL(images[Math.floor(Math.random() * 9)]);
     let el = document.getElementById('download_container')
     el.style.backgroundImage = `url('${src}')`;
+    return src
   }
 
-  React.useEffect(() => {
-    async function getInitImage () {
-      let src = await toDataURL(images[0].src);
-      let el = document.getElementById('download_container')
-      el.style.backgroundImage = `url('${src}')`;
-    }
-    getInitImage()
-  },[])
+  const updateTitle = (val) => {
+    setTitle(val)
+  }
+
+  const startFactor = async () => {
+    console.log('Fired')
+    let res = await axios.get('https://api.precisely.co.in/api/v1/list_s3_files?user_id=1&type=0')
+    let result = res.data.data
+    result.map(async (r) => {
+      let done = await changeBg()
+      if (done) {
+        if(r.thumbnail_url === null || r.thumbnail_url === ''){
+          updateTitle(r.title)
+          generate(r.id)
+        }
+      }
+    })
+  }
+
+  React.useEffect(() => { changeBg() }, [])
 
   return (
     <>
@@ -53,17 +62,7 @@ const ThumbGenerator = () => {
         </div>
       </div>
       <br />
-      <select onChange={handleOptions}>
-        {
-          images.map((i,key) => {
-            return (
-              <option key={key}>{i.name}</option>
-            )
-          })
-        }
-      </select>
-      <input type="text" value={title} onChange={handleChange} placeholder="Enter text"/>
-      <button onClick={() => generate('Happy')}>Download Image</button>
+      <button onClick={startFactor}>Start Task</button>
     </>
   )
 }

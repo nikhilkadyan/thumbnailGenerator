@@ -1,10 +1,6 @@
-@font-face {
-  font-family: Qualy;
-  src: url("./Qualy.ttf") ;
-}
-
 body {
   overflow: hidden;
+  font-family: 'Poppins', sans-serif;
 }
 
 #download_container {
@@ -20,8 +16,6 @@ body {
   width: calc(100% - 21px);
   height: 100%;
   padding: 0 10px;
-  font-family: Qualy !important;
-  font-weight: 700;
   display: flex;
   text-align: center;
   align-items: center;
