@@ -1,5 +1,6 @@
 import React from 'react';
-import images from './image';
+import images from './images';
+import video_images from './video_images';
 import axios from 'axios';
 
 const ThumbGenerator = () => {
@@ -61,26 +62,42 @@ const ThumbGenerator = () => {
     });
   }
 
-  const changeBg = async () => {
-    let src = await toDataURL(images[Math.floor(Math.random() * 9)]);
+  const changeBg = async (type) => {
+    if (type === 'portrait') {
+      let src = await toDataURL(images[Math.floor(Math.random() * 9)]);
+      let el = document.getElementById('download_container')
+      el.style.backgroundImage = `url('${src}')`;
+      el.style.width = '300px';
+      el.style.height = '425px';
+      return src
+    }
+    let src = await toDataURL(video_images[Math.floor(Math.random() * 10)]);
     let el = document.getElementById('download_container')
     el.style.backgroundImage = `url('${src}')`;
+    el.style.width = '749px';
+    el.style.height = '421px';
     return src
   }
 
   const startFactor = async () => {
     console.log('Fired')
     let res = await axios.get('https://api.precisely.co.in/api/v1/list_s3_files?user_id=1&type=0')
+    console.log(res.data.data)
+
     let result = []
     // eslint-disable-next-line
+
     res.data.data.map(r => {
       if (r.thumbnail_url === null || r.thumbnail_url === '') {
         return result.push(r)
       }
     })
     result.map(async (r) => {
-      // console.log(r)
-      let done = await changeBg()
+      let type = 'portrait';
+      if (r.file_type_id === 3 || r.file_type_id === 4) {
+        type = 'landscape'
+      }
+      let done = await changeBg(type)
       if (done) {
         setTitle(r.title)
         generate(r)
@@ -89,9 +106,9 @@ const ThumbGenerator = () => {
   }
 
   React.useEffect(() => {
-    changeBg()
+    changeBg('landscape')
     // eslint-disable-next-line
-  },[])
+  }, [])
 
   return (
     <>

@@ -4,8 +4,6 @@ body {
 }
 
 #download_container {
-  width: 300px;
-  height: 425px;
   font-size: 32px;
   position: relative;
   color: white;
